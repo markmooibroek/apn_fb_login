@@ -25,10 +25,8 @@ class ApnFbLogin {
     Map<String, dynamic> arguments = _facebookConnect.toMap()
       ..putIfAbsent("accessToken", () => _facebookOAuthToken.accessToken);
 
-    return _channel.invokeMethod("graph/me", arguments).then((Map<String, String> data) {
-      print(data.toString());
-      return new FacebookUser.fromMap(data);
-    });
+    return _channel.invokeMethod("graph/me", arguments)
+        .then((Map<String, String> data) => new FacebookUser.fromMap(data));
   }
 }
 
