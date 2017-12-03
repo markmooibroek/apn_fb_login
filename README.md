@@ -49,7 +49,8 @@ Define a `FacebookConnect` object:
 ```dart
     final _facebookConnect = new FacebookConnect(
         appId: '##APPID##',
-        clientSecret: '##APPSECRET##');
+        clientSecret: '##APPSECRET##'
+    );
 ```
 
 Authenticate like so:
