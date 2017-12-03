@@ -1,8 +1,8 @@
 name: apn_fb_login
 description: Flutter Facebook Plugin.
-version: 0.0.1
+version: 0.0.2
 author: Mark Mooibroek <mark@appnormal.com>
-homepage: https://www.appnormal.com
+homepage: https://github.com/markmooibroek/apn_fb_login
 
 dependencies:
   flutter:
