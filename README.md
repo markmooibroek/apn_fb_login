@@ -8,6 +8,7 @@ A flutter plugin project that allows you to easily connect to Facebook and get y
 
 Edit your `Info.plist` and add add the following:
 
+```xml
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
@@ -21,13 +22,14 @@ Edit your `Info.plist` and add add the following:
     <string>##APPID##</string>
     <key>FacebookDisplayName</key>
     <string>##APPNAME##</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	    <string>fbapi</string>
-	    <string>fb-messenger-api</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
         <string>fbauth2</string>
-	    <string>fbshareextension</string>
-	</array>
+        <string>fbshareextension</string>
+    </array>
+```
 
 Change `##APPID##` and `##APPNAME##`
 
@@ -38,31 +40,39 @@ None
 
 Import the lib:
 
+```dart
     import 'package:apn_fb_login/apn_fb_login.dart';
+```
 
 Define a `FacebookConnect` object:
 
+```dart
     final _facebookConnect = new FacebookConnect(
         appId: '##APPID##',
         clientSecret: '##APPSECRET##');
+```
 
 Authenticate like so:
 
+```dart
     ApnFbLogin.login(_facebookConnect).then((FacebookOAuthToken token) {
       this.token = token;
     }).catchError((dynamic error) {
       print(error);
     });
+```
 
-Use the FacebookOAuthToken to get the graph/me result:
+Use the `FacebookOAuthToken` to get the graph/me result:
 
+```dart
     ApnFbLogin.me().then((FacebookUser user) {
       this.user = user;
     }).catchError((dynamic error) {
       print(error);
     });
+```
 
-See the project in /example for a more complete example
+See the project [example](https://github.com/markmooibroek/apn_fb_login/blob/master/example/lib/main.dart) for the complete example
 
 ## Flutter
 For help getting started with Flutter, view our online
