@@ -1,0 +1,37 @@
+PODS:
+  - apn_fb_login (0.0.1):
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - Flutter
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - FBSDKCoreKit (4.28.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.28.0):
+    - FBSDKCoreKit
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - apn_fb_login (from `/Users/mark/Projects/flutter/apn_fb_login/ios`)
+  - Flutter (from `/Users/Shared/flutter/bin/cache/artifacts/engine/ios`)
+
+EXTERNAL SOURCES:
+  apn_fb_login:
+    :path: /Users/mark/Projects/flutter/apn_fb_login/ios
+  Flutter:
+    :path: /Users/Shared/flutter/bin/cache/artifacts/engine/ios
+
+SPEC CHECKSUMS:
+  apn_fb_login: b9e90a2494e2b0f77ff9ff7f826c21488c2b908c
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
+  FBSDKLoginKit: b077381c27d800f21661757e8140cf2c80a91e4a
+  Flutter: d674e78c937094a75ac71dd77e921e840bea3dbf
+
+PODFILE CHECKSUM: 351e02e34b831289961ec3558a535cbd2c4965d2
+
+COCOAPODS: 1.3.1
