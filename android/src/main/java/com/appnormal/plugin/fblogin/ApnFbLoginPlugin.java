@@ -130,6 +130,9 @@ public class ApnFbLoginPlugin implements MethodCallHandler, PluginRegistry.Activ
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        return mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (mCallbackManager != null)
+            return mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        else
+            return false;
     }
 }
