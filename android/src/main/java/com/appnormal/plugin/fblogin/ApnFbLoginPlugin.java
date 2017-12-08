@@ -99,7 +99,7 @@ public class ApnFbLoginPlugin implements MethodCallHandler, PluginRegistry.Activ
                             }
                         });
 
-                LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "user_friends"));
+                LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "email"));
                 break;
 
             case "graph/me":
