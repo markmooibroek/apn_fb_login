@@ -1,3 +1,7 @@
+## [0.0.4] - December 29, 2017
+
+* Upgraded to Gradle 4.1 and Gradle plugin 3.0.1 to match upgraded Firebase plugins
+
 ## [0.0.3] - December 08, 2017
 
 * Fixed a NPE in the Android onActivityResult
