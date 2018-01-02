@@ -50,14 +50,14 @@
         <dict>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>fb##APPID##</string>
+                <string>fb317163811713932</string>
             </array>
         </dict>
     </array>
     <key>FacebookAppID</key>
-    <string>##APPID##</string>
+    <string>317163811713932</string>
     <key>FacebookDisplayName</key>
-    <string>##APPNAME##</string>
+    <string>Rummified</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

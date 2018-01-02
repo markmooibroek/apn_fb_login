@@ -1,3 +1,8 @@
+## [0.0.5] -
+
+* [breaking] Add Facebook secret and token to AndroidManifest.xml
+* Improved automatic Facebook session creation
+
 ## [0.0.4] - December 29, 2017
 
 * Upgraded to Gradle 4.1 and Gradle plugin 3.0.1 to match upgraded Firebase plugins

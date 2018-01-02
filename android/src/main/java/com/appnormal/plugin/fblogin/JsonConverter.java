@@ -16,9 +16,9 @@ import java.util.Map;
  * This code may not be used without explicit permission of appnormal.com BV. This code is copyrighted.
  */
 
-public class JsonConverter {
+class JsonConverter {
 
-    public static Map<String, Object> convertToMap(JSONObject json) throws JSONException {
+    static Map<String, Object> convertToMap(JSONObject json) throws JSONException {
         Map<String, Object> retMap = new HashMap<>();
 
         if (json != JSONObject.NULL) {

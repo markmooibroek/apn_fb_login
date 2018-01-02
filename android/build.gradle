@@ -35,8 +35,13 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation 'com.facebook.android:facebook-login:4.29.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
 }

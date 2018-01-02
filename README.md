@@ -31,10 +31,17 @@ Edit your `Info.plist` and add add the following:
     </array>
 ```
 
-Change `##APPID##` and `##APPNAME##`
+Don't forget to change `##APPID##` and `##APPNAME##`
 
 ### Android configuration
-None
+
+Add this to your AndroidManifest.xml
+
+```xml
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="##APPID##"/>
+```
+
+Don't forget to change `##APPID##`
 
 ## Usage
 

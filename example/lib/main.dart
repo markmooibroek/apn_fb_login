@@ -10,14 +10,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isloading = false;
-  FacebookOAuthToken token;
   FacebookUser user;
   String data;
-
-  /// Get your app id and secret at https://developers.facebook.com
-  final _facebookConnect = new FacebookConnect(
-      appId: '##APPID##',
-      clientSecret: '##APPSECRET##');
 
   @override
   Widget build(BuildContext context) {
@@ -25,38 +19,42 @@ class _MyAppState extends State<MyApp> {
       home: new Scaffold(
         appBar: new AppBar(
           title: new Text('Facebook login'),
+          actions: <Widget>[
+            new GestureDetector(
+              onTap: _logout,
+              child: new Icon(Icons.lock_open),
+            )
+          ],
         ),
         body: _body(),
         floatingActionButton: new FloatingActionButton(
-          child: new Icon(token == null ? Icons.lock_open : Icons.face),
+          child: new Icon(Icons.face),
           onPressed: () {
             if (isloading) return;
 
             _setResult(true, null);
-            if (token == null)
-              _doLogin();
-            else
-              _queryMe();
+            _queryMe();
           },
         ),
       ),
     );
   }
 
-  void _doLogin() {
-    ApnFbLogin.login(_facebookConnect).then((FacebookOAuthToken token) {
-      this.token = token;
-      _setResult(false, token.toString());
+  void _queryMe() {
+    ApnFbLogin.me().then((FacebookUser user) {
+      this.user = user;
+      _setResult(false, user.toString());
     }).catchError((dynamic error) {
       print(error);
       _setResult(false, null);
     });
   }
 
-  void _queryMe() {
-    ApnFbLogin.me().then((FacebookUser user) {
-      this.user = user;
-      _setResult(false, user.toString());
+  void _logout() {
+    _setResult(true, null);
+    ApnFbLogin.logout().then((dynamic data) {
+      this.user = null;
+      _setResult(false, null);
     }).catchError((dynamic error) {
       print(error);
       _setResult(false, null);
@@ -73,8 +71,6 @@ class _MyAppState extends State<MyApp> {
             _textWidget("Got user!\nWelcome ${user.name}"),
             new ClipOval(child: new Image.network(this.user.avatarUrl)),
           ]);
-    } else if (this.token != null) {
-      return _textWidget("Authorized!\nClick again to query /me");
     } else {
       return _textWidget("Click the button to connect with Facebook");
     }
@@ -87,8 +83,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Widget _textWidget(String text) =>
-      new Container(
+  Widget _textWidget(String text) => new Container(
         padding: new EdgeInsets.all(8.0),
         child: new Center(
           child: new Text(
@@ -97,5 +92,4 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       );
-
 }
