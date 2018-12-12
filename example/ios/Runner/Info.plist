@@ -55,9 +55,9 @@
         </dict>
     </array>
     <key>FacebookAppID</key>
-    <string>317163811713932</string>
+    <string>###</string>
     <key>FacebookDisplayName</key>
-    <string>Rummified</string>
+    <string>##</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
