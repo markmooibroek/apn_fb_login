@@ -59,11 +59,6 @@
 }
 
 - (void)doFacebookAuthWithResult: (FlutterResult) result andCallback:(void(^)(FBSDKAccessToken *)) callback {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    if ([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"fb://"]]) {
-        login.loginBehavior = FBSDKLoginBehaviorSystemAccount;
-    }
-    
     void (^handler)(FBSDKLoginManagerLoginResult *, NSError *)=^(FBSDKLoginManagerLoginResult *fbResult, NSError *error) {
         if (error) {
             NSLog(@"Unexpected login error: %@", error);
@@ -83,7 +78,7 @@
         
     };
     
-    [login logInWithReadPermissions:@[@"public_profile", @"email"]
+    [[[FBSDKLoginManager alloc] init] logInWithPermissions:@[@"public_profile", @"email"]
                  fromViewController:_viewController
                             handler:handler];
 }
