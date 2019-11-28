@@ -1,10 +1,15 @@
-## [0.0.7] - Oktober 8, 2019
+## [0.0.8] - November 28, 2019
+
+- Fixed a bug in regard to cancelling the iOS Facebook authentication
+
+
+## [0.0.7] - October 8, 2019
 
 - Updated iOS facebook SDK integration to the latest version
 
 ## [0.0.5] -
 
-- [breaking] Add Facebook secret and token to AndroidManifest.xml
+- **BREAKING** Add Facebook secret and token to AndroidManifest.xml
 - Improved automatic Facebook session creation
 
 ## [0.0.4] - December 29, 2017
