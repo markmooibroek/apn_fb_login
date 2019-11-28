@@ -34,13 +34,18 @@
     }else if ([@"login" isEqualToString:call.method]) {
         
         [self doFacebookAuthWithResult: result andCallback:^(FBSDKAccessToken *accessToken){
-            result(@{
-                     @"accessToken": accessToken.tokenString,
-                     @"acceptedPermissions": [accessToken.permissions.allObjects componentsJoinedByString:@","],
-                     @"deniedPermissions": [accessToken.declinedPermissions.allObjects componentsJoinedByString:@","],
-                     @"userId": accessToken.userID,
-                     @"expiresIn": @((int)round(accessToken.expirationDate.timeIntervalSince1970)),
-                     });
+            
+            if(accessToken != nil) {
+                result(@{
+                         @"accessToken": accessToken.tokenString,
+                         @"acceptedPermissions": [accessToken.permissions.allObjects componentsJoinedByString:@","],
+                         @"deniedPermissions": [accessToken.declinedPermissions.allObjects componentsJoinedByString:@","],
+                         @"userId": accessToken.userID,
+                         @"expiresIn": @((int)round(accessToken.expirationDate.timeIntervalSince1970)),
+                         });
+            }else {
+                result([FlutterError errorWithCode:@"fb_error" message:@"Generic error" details:nil]);
+            }
         }];
         
     } else if ([@"graph/me" isEqualToString:call.method]) {
@@ -69,11 +74,13 @@
                                        delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil] show];
+            
+            callback(nil);
         } else if (fbResult.token) {
             FBSDKAccessToken *accessToken = fbResult.token;
             callback(accessToken);
         } else {
-            NSLog(@"Login Cancel");
+            callback(nil);
         }
         
     };
@@ -101,7 +108,7 @@
              });
              
          } else {
-             
+             result([FlutterError errorWithCode:@"fb_error" message:@"Generic error" details:nil]);
              NSLog(@"%@", [error localizedDescription]);
          }
      }];
