@@ -34,13 +34,18 @@
     }else if ([@"login" isEqualToString:call.method]) {
         
         [self doFacebookAuthWithResult: result andCallback:^(FBSDKAccessToken *accessToken){
-            result(@{
-                     @"accessToken": accessToken.tokenString,
-                     @"acceptedPermissions": [accessToken.permissions.allObjects componentsJoinedByString:@","],
-                     @"deniedPermissions": [accessToken.declinedPermissions.allObjects componentsJoinedByString:@","],
-                     @"userId": accessToken.userID,
-                     @"expiresIn": @((int)round(accessToken.expirationDate.timeIntervalSince1970)),
-                     });
+            
+            if(accessToken != nil) {
+                result(@{
+                         @"accessToken": accessToken.tokenString,
+                         @"acceptedPermissions": [accessToken.permissions.allObjects componentsJoinedByString:@","],
+                         @"deniedPermissions": [accessToken.declinedPermissions.allObjects componentsJoinedByString:@","],
+                         @"userId": accessToken.userID,
+                         @"expiresIn": @((int)round(accessToken.expirationDate.timeIntervalSince1970)),
+                         });
+            }else {
+                result([FlutterError errorWithCode:@"fb_error" message:@"Generic error" details:nil]);
+            }
         }];
         
     } else if ([@"graph/me" isEqualToString:call.method]) {
@@ -59,11 +64,6 @@
 }
 
 - (void)doFacebookAuthWithResult: (FlutterResult) result andCallback:(void(^)(FBSDKAccessToken *)) callback {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    if ([UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"fb://"]]) {
-        login.loginBehavior = FBSDKLoginBehaviorSystemAccount;
-    }
-    
     void (^handler)(FBSDKLoginManagerLoginResult *, NSError *)=^(FBSDKLoginManagerLoginResult *fbResult, NSError *error) {
         if (error) {
             NSLog(@"Unexpected login error: %@", error);
@@ -74,16 +74,18 @@
                                        delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil] show];
+            
+            callback(nil);
         } else if (fbResult.token) {
             FBSDKAccessToken *accessToken = fbResult.token;
             callback(accessToken);
         } else {
-            NSLog(@"Login Cancel");
+            callback(nil);
         }
         
     };
     
-    [login logInWithReadPermissions:@[@"public_profile", @"email"]
+    [[[FBSDKLoginManager alloc] init] logInWithPermissions:@[@"public_profile", @"email"]
                  fromViewController:_viewController
                             handler:handler];
 }
@@ -106,7 +108,7 @@
              });
              
          } else {
-             
+             result([FlutterError errorWithCode:@"fb_error" message:@"Generic error" details:nil]);
              NSLog(@"%@", [error localizedDescription]);
          }
      }];

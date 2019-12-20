@@ -8,20 +8,18 @@ class ApnFbLogin {
   static const MethodChannel _channel = const MethodChannel('apn_fb_login');
 
   static Future<FacebookOAuthToken> login() {
-    Map<String, dynamic> arguments;
     return _channel
-        .invokeMethod("login", arguments)
-        .then((Map<String, String> data) {
+        .invokeMethod("login")
+        .then((data) {
       _facebookOAuthToken = new FacebookOAuthToken.fromMap(data);
       return _facebookOAuthToken;
     });
   }
 
   static Future<FacebookUser> me() {
-    Map<String, dynamic> arguments;
     return _channel
-        .invokeMethod("graph/me", arguments)
-        .then((Map<String, String> data) => new FacebookUser.fromMap(data));
+        .invokeMethod("graph/me")
+        .then((data) => new FacebookUser.fromMap(data));
   }
 
   static Future<dynamic> logout() {
@@ -35,7 +33,7 @@ class FacebookUser {
   String name;
   String email;
 
-  FacebookUser.fromMap(Map<String, dynamic> data)
+  FacebookUser.fromMap(Map data)
       : id = data["id"],
         name = data["name"],
         email = data["email"];
@@ -51,19 +49,19 @@ class FacebookUser {
 class FacebookOAuthToken {
   String accessToken;
   List<String> acceptedPermissions;
-  List<String> deniedTermissions;
+  List<String> deniedPermissions;
   String userId;
   int expiresIn;
 
-  FacebookOAuthToken.fromMap(Map<String, dynamic> data)
+  FacebookOAuthToken.fromMap(Map data)
       : accessToken = data["accessToken"],
         acceptedPermissions = "${data["acceptedPermissions"]}".split(","),
-        deniedTermissions = "${data["deniedTermissions"]}".split(","),
+        deniedPermissions = "${data["deniedTermissions"]}".split(","),
         userId = data["userId"],
         expiresIn = data["expiresIn"];
 
   @override
   String toString() {
-    return 'FacebookOAuthToken{accessToken: $accessToken, acceptedPermissions: $acceptedPermissions, deniedTermissions: $deniedTermissions, userId: $userId, expiresIn: $expiresIn}';
+    return 'FacebookOAuthToken{accessToken: $accessToken, acceptedPermissions: $acceptedPermissions, deniedTermissions: $deniedPermissions, userId: $userId, expiresIn: $expiresIn}';
   }
 }

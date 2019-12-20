@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
@@ -22,26 +22,23 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+
+    lintOptions.disable 'InvalidPackage'
+    compileOptions.sourceCompatibility JavaVersion.VERSION_1_8
+    compileOptions.targetCompatibility JavaVersion.VERSION_1_8
 }
 
 dependencies {
-    implementation 'com.facebook.android:facebook-login:4.29.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.facebook.android:facebook-login:4.38.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
