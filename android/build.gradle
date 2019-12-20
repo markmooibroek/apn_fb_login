@@ -1,21 +1,21 @@
-group 'com.yourcompany.apnfblogin'
+group 'com.appnormal.plugin.fblogin.apn_fb_login'
 version '1.0-SNAPSHOT'
 
 buildscript {
     repositories {
-        google()
         jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.5.3'
     }
 }
 
 rootProject.allprojects {
     repositories {
-        google()
         jcenter()
+        google()
     }
 }
 
@@ -23,14 +23,10 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.3'
-
+    
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     lintOptions.disable 'InvalidPackage'
@@ -39,6 +35,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.facebook.android:facebook-login:4.38.1'
+    implementation 'com.facebook.android:facebook-login:4.39.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 }

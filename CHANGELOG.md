@@ -1,7 +1,10 @@
+## [0.0.11] - December 20, 2019
+
+- AndroidX migration
+
 ## [0.0.8] - November 28, 2019
 
 - Fixed a bug in regard to cancelling the iOS Facebook authentication
-
 
 ## [0.0.7] - October 8, 2019
 
