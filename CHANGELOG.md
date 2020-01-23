@@ -1,3 +1,7 @@
+## [0.0.12] - Januari 23, 2020
+
+- [Android] Removed dependency on gson and rely on Faceook SDK to store the accesstoken
+
 ## [0.0.11] - December 20, 2019
 
 - AndroidX migration
