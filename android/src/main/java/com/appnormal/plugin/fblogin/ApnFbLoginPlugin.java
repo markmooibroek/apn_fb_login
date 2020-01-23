@@ -1,11 +1,11 @@
 package com.appnormal.plugin.fblogin;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -13,7 +13,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.GraphRequest;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 
@@ -34,11 +33,12 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class ApnFbLoginPlugin implements MethodCallHandler, PluginRegistry.ActivityResultListener {
 
     private static final String TAG = "ApnFbLoginPlugin";
-    private static final String PREFS = "default";
-    public static final String PREF_ACCESS_TOKEN = "access_token";
-
     private Activity activity;
     private CallbackManager mCallbackManager;
+
+    private ApnFbLoginPlugin(Activity activity) {
+        this.activity = activity;
+    }
 
     /**
      * Plugin registration.
@@ -50,33 +50,19 @@ public class ApnFbLoginPlugin implements MethodCallHandler, PluginRegistry.Activ
         channel.setMethodCallHandler(instance);
     }
 
-    private ApnFbLoginPlugin(Activity activity) {
-        this.activity = activity;
-    }
-
     @Override
-    public void onMethodCall(final MethodCall call, final Result result) {
-        Map<String, String> params = call.arguments();
+    public void onMethodCall(@NonNull final MethodCall call, @NonNull final Result result) {
 
-        boolean loggedIn = getAccessToken() != null;
-        if (loggedIn) {
-            AccessToken.setCurrentAccessToken(getAccessToken());
-        }
-
-        Log.i(getClass().getSimpleName(), "onMethodCall: " + (loggedIn ? "true" : "false"));
+        boolean isLoggedIn = AccessToken.getCurrentAccessToken() != null;
 
         switch (call.method) {
             case "logout":
-                saveAccessToken(null);
                 AccessToken.setCurrentAccessToken(null);
                 result.success(new HashMap<String, Object>());
                 break;
             case "login":
 
                 loginWithCallback(FacebookHelper.loginResultCallback(result, loginResult -> {
-                    Log.d("Success", "Login");
-                    saveAccessToken(loginResult.getAccessToken());
-
                     AccessToken accessToken = loginResult.getAccessToken();
                     Map<String, Object> data = new HashMap<>();
                     data.put("accessToken", accessToken.getToken());
@@ -89,36 +75,19 @@ public class ApnFbLoginPlugin implements MethodCallHandler, PluginRegistry.Activ
 
                 break;
             case "graph/me":
-                if (!loggedIn) {
+
+                if (isLoggedIn) {
+                    queryMe(result);
+                } else {
                     loginWithCallback(FacebookHelper.loginResultCallback(result, loginResult -> {
-                        saveAccessToken(loginResult.getAccessToken());
                         queryMe(result);
                     }));
-                } else {
-                    queryMe(result);
                 }
                 break;
             default:
                 result.notImplemented();
                 break;
         }
-    }
-
-    private void saveAccessToken(AccessToken accessToken) {
-        activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
-                .putString(PREF_ACCESS_TOKEN, new Gson().toJson(accessToken))
-                .apply();
-    }
-
-    private AccessToken getAccessToken() {
-        boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
-        if (loggedIn) return AccessToken.getCurrentAccessToken();
-        String savedAccessTokenString = activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(PREF_ACCESS_TOKEN, null);
-
-        if (savedAccessTokenString != null) {
-            return new Gson().fromJson(savedAccessTokenString, AccessToken.class);
-        }
-        return null;
     }
 
     private void loginWithCallback(FacebookCallback<LoginResult> callback) {
